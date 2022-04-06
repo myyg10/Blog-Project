@@ -1,6 +1,6 @@
 package com.caholic.blog.model;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,5 +41,5 @@ public class User {
 	private String role; // Enum을 쓰는게 좋다. // admin, user, manager
 
 	@CreationTimestamp
-	private LocalDateTime createDate;
+	private Timestamp createDate;
 }
