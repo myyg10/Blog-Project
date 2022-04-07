@@ -1,19 +1,24 @@
 package com.caholic.blog.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.caholic.blog.dto.ReplySaveRequestDto;
 import com.caholic.blog.model.Board;
 import com.caholic.blog.model.User;
 import com.caholic.blog.repository.BoardRepository;
+import com.caholic.blog.repository.ReplyRepository;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 
-	@Autowired
-	private BoardRepository boardRepository;
+	private final BoardRepository boardRepository;
+	private final ReplyRepository replyRepository;
 
 	@Transactional
 	public void 글쓰기(Board board, User user) { // title, content
@@ -50,5 +55,16 @@ public class BoardService {
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
 		// 해당 함수로 종료시(Service가 종료될 때) 트랜잭션이 종료됩니다. 이때 더티체킹 - 자동 업데이트가 됨. db flush
+	}
+	
+	@Transactional
+	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {
+		int result = replyRepository.mSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
+		System.out.println("BoardService : "+result);
+	}
+	
+	@Transactional
+	public void 댓글삭제(int replyId) {
+		replyRepository.deleteById(replyId);
 	}
 }
