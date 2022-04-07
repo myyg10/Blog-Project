@@ -4,6 +4,7 @@ let index = {
 				this.save();
 			});
 		},
+		
 
 		save: function(){
 			//alert('user의 save함수 호출됨');
@@ -12,6 +13,7 @@ let index = {
 					password: $("#password").val(),
 					email: $("#email").val()
 			};
+			
 			
 			//console.log(data);
 			
@@ -33,6 +35,7 @@ let index = {
 			}); 
 
 		}
+		
 }
 
 index.init();
